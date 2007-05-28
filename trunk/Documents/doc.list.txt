@@ -1,0 +1,17 @@
+* 提交作品时都必须提供以下文档资料：
+
+The following context was licensed under term of LGPL.
+
+1. 您所开发的Netbeans插件模块的作用。
+Code Review是软件开发过程中日常进行的一个重要环节。一般开发人员之间会做口头上的沟通。对于异地开发，大多数通过列表或者邮件的形势来完成。但其问题就是沟通效果和交互性上的问题。
+此插件着重解决Code Review过程中沟通的问题，通过构建在NetBeansIDE平台上的插件，完成对于Java文件Code Review结果的表现。在后台通过可以存取通用XML的方式达到结果的共享（其通过版本控制软件或文件共享）。
+
+2. 您所开发的Netbeans插件模块的架构。
+
+
+3. 您所开发的Netbeans插件模块的使用方法。
+
+步骤1：启动Code Review模块
+步骤2：移动光标去指定的行
+步骤3：维护当前行的Code Review结果（增删）
+步骤4：关闭Code Review模块
