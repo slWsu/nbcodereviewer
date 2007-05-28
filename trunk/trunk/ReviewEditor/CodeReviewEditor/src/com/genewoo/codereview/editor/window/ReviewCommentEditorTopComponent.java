@@ -251,7 +251,8 @@ public final class ReviewCommentEditorTopComponent extends TopComponent {
     }
     
     public void componentClosed() {
-        System.out.println("close");
+        if(null != this.action)
+            this.action.closeAll();
     }
     
     /** replaces this in object stream */

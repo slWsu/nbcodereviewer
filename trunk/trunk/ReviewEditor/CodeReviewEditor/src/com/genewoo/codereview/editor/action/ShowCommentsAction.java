@@ -79,10 +79,10 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
     public void closeAll() {
 //            c.getOpenedPanes()[0].removePropertyChangeListener(this);
 //            c.getOpenedPanes()[0].removeCaretListener(this);
+        // Close Review Comments Editor
         if(null !=  getMostActiveComponent()) {
             removeStatusBarItem(getMostActiveComponent());
         }
-        this.setEnabled(true);
         rc.writeFile();
     }
     
@@ -92,8 +92,14 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
     
     EditorCookie c;
     
+    private int status = 0;
+    
     protected void performAction(Node[] activatedNodes) {
-        this.setEnabled(false);
+        if(status == 1) {
+            closeAll();
+            return;
+        }
+        status = 1;
         c = (EditorCookie) activatedNodes[0].getCookie(EditorCookie.class);
         
         c.getOpenedPanes()[0].addCaretListener(this);
@@ -230,7 +236,10 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
     }
     
     public String getName() {
-        return NbBundle.getMessage(ShowCommentsAction.class, "CTL_ShowCommentsAction");
+        if(status==0)
+            return NbBundle.getMessage(ShowCommentsAction.class, "CTL_ShowCommentsAction");
+        else
+            return NbBundle.getMessage(ShowCommentsAction.class, "CTL_CloseCommentsAction");
     }
     
     protected Class[] cookieClasses() {
