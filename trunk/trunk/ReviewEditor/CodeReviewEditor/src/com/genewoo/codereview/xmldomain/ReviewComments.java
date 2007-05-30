@@ -88,25 +88,31 @@ public class ReviewComments extends Converable {
     
     public static ReviewComments parseReviewComments(String filename) {
         ReviewComments reviewCmts = null;
-        try {
-            Document doc = parseXmlFile(filename);
-            reviewCmts = new ReviewComments(filename);
-            Node reviewComments = XPathAPI.selectSingleNode(doc, REVIEWCOMMENTS);
-            NodeList list = reviewComments.getChildNodes();
-            for(int i = 0; i < list.getLength(); i++){
-                Node node = list.item(i);
-                if(node.getNodeName().equals(VERSION)) {
-                    reviewCmts.version = node.getTextContent();
-                } else if (node.getNodeName().equals(COMMENTS)) {
-                    Comments comments = Comments.parseComments(node);
-                    reviewCmts.addComments(comments);
+        
+        File file = new File(filename);
+        reviewCmts = new ReviewComments(filename);
+        if(file.exists()){
+            try {
+                Document doc = parseXmlFile(filename);
+                
+                Node reviewComments = XPathAPI.selectSingleNode(doc, REVIEWCOMMENTS);
+                NodeList list = reviewComments.getChildNodes();
+                for(int i = 0; i < list.getLength(); i++){
+                    Node node = list.item(i);
+                    if(node.getNodeName().equals(VERSION)) {
+                        reviewCmts.version = node.getTextContent();
+                    } else if (node.getNodeName().equals(COMMENTS)) {
+                        Comments comments = Comments.parseComments(node);
+                        reviewCmts.addComments(comments);
+                    }
                 }
+            } catch (Exception ex) {
+                reviewCmts = null;
+                ex.printStackTrace();
             }
-            
-        } catch (Exception ex) {
-            reviewCmts = null;
-            ex.printStackTrace();
         }
+        
+        
         return reviewCmts;
     }
     
@@ -148,7 +154,7 @@ public class ReviewComments extends Converable {
         }
         return root;
     }
-
+    
     public String getNodeText() {
         sb.append(HEADER);
         startNode(REVIEWCOMMENTS.replace("/", ""));
@@ -163,7 +169,12 @@ public class ReviewComments extends Converable {
     }
     
     public void writeFile() {
-       try {
+        try {
+            File file = new File(this.path);
+            if(file.exists()) {
+                file.delete();
+            }
+            this.validateComments();
             BufferedWriter out = new BufferedWriter(new FileWriter(this.path));
             out.write(this.getNodeText());
             out.close();

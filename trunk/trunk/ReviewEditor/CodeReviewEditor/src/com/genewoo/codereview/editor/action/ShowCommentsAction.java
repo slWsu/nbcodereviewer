@@ -84,6 +84,7 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
             removeStatusBarItem(getMostActiveComponent());
         }
         rc.writeFile();
+        status = 0;
     }
     
     public static void removeStatusBarItem(JTextComponent jText) {
@@ -97,6 +98,7 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
     protected void performAction(Node[] activatedNodes) {
         if(status == 1) {
             closeAll();
+
             return;
         }
         status = 1;
@@ -106,13 +108,13 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
         c.getOpenedPanes()[0].addPropertyChangeListener("editorKit", this);
         
         StyledDocument sd = (StyledDocument)c.getOpenedPanes()[0].getDocument();
-        rc = ReviewComments.parseReviewComments("d:/ExampleXml.xml");
+        rc = ReviewComments.parseReviewComments(getFileName());
         addStatusBarItem(c.getOpenedPanes()[0]);
         TopComponent win = WindowManager.getDefault().findTopComponent("ReviewCommentEditorTopComponent");
         
         win.open();
         win.requestActive();
-        getFileName();
+        System.out.println(getFileName());
 //        try {
 //            Utilities.getRowStart(getMostActiveComponent(), 0);
 //        } catch (BadLocationException ex) {
@@ -263,20 +265,23 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
     }
     
     /**
-     * DOCUMENT ME!
+     * Get the code review file name.
+     * The naming conversion is "*.java" + ".cr"
      */
     public String getFileName() {
         BaseDocument nue = Registry.getMostActiveDocument();
         JTextComponent jtc = Registry.getMostActiveComponent();
         
-        //NbEditorUtilities.getFileObject(nue);
-        DataObject dob = NbEditorUtilities.getDataObject(nue); //setModified(false);
-        //NbEditorUtilities.getTopComponent(Registry.getMostActiveComponent());//close
-        
-        
-        
-        System.out.println("making a copy of " + dob.getName());
-        return dob.getName();
+        FileObject fob = NbEditorUtilities.getFileObject(nue);
+//        DataObject dob = NbEditorUtilities.getDataObject(nue); //setModified(false);
+//        //NbEditorUtilities.getTopComponent(Registry.getMostActiveComponent());//close
+//
+//
+//
+//        System.out.println("making a copy of " + dob.getName());
+//        System.out.println("folder " + dob.getFolder().getName());
+//        System.out.println("file" + ":" + fob.getPath());
+        return fob.getPath() + ".cr";
         
         
 //      if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -333,6 +338,8 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
         //ggf setmodified false on original and close buffer (TC)
         //http://jroller.com/page/ramlog/20060715
     }
+    
+
     
     
 }

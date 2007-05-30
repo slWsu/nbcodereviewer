@@ -1,4 +1,11 @@
 * Ìá½»×÷Æ·Ê±¶¼±ØÐëÌá¹©ÒÔÏÂÎÄµµ×ÊÁÏ£º
+netbeans-contest@sun.com
+
+ÊµÓÃÐÔ 
+´´ÐÂÐÔ 
+ÏµÍ³ÐÔÄÜ 
+Í¶ Èë²ú³ö±ÈµÈ¶à·½ÃæÒòËØ 
+
 
 The following context was licensed under term of LGPL.
 
@@ -7,7 +14,12 @@ Code ReviewÊÇÈí¼þ¿ª·¢¹ý³ÌÖÐÈÕ³£½øÐÐµÄÒ»¸öÖØÒª»·½Ú¡£Ò»°ã¿ª·¢ÈËÔ±Ö®¼ä»á×ö¿ÚÍ·ÉÏµÄ¹
 ´Ë²å¼þ×ÅÖØ½â¾öCode Review¹ý³ÌÖÐ¹µÍ¨µÄÎÊÌâ£¬Í¨¹ý¹¹½¨ÔÚNetBeansIDEÆ½Ì¨ÉÏµÄ²å¼þ£¬Íê³É¶ÔÓÚJavaÎÄ¼þCode Review½á¹ûµÄ±íÏÖ¡£ÔÚºóÌ¨Í¨¹ý¿ÉÒÔ´æÈ¡Í¨ÓÃXMLµÄ·½Ê½´ïµ½½á¹ûµÄ¹²Ïí£¨ÆäÍ¨¹ý°æ±¾¿ØÖÆÈí¼þ»òÎÄ¼þ¹²Ïí£©¡£
 
 2. ÄúËù¿ª·¢µÄNetbeans²å¼þÄ£¿éµÄ¼Ü¹¹¡£
+´óÌåÉÏ·ÖÎªÈý²¿·Ö×é³É¡£
+A. ÒÔCookieActionÎªÀ©Õ¹µÄAction×é¼þ¡£´¦ÀíJava±à¼­Æ÷´°¿ÚÄÚÒ»ÏµÁÐÊÂ¼þµÄ²¶»ñºÍ×ª·¢£¬²¢³Ðµ£ÁË³õÊ¼»¯ÒµÎñ¶ÔÏóÒÔ¼°½»»¥½çÃæµÄÔðÈÎ¡£
 
+B. ÔÚTopComponentÉÏÀ©Õ¹µÄ´°¿Ú×é¼þÎªºËÐÄµÄ½»»¥½çÃæ£¬°üº¬ÁË¶ÔÓÚµ±Ç°ÐÐCode Review½á¹ûµÄÔöÉ¾¹¦ÄÜ¡£
+
+C. Ò»ÏµÁÐµÄJava Bean×é³É¶ÔÏóÈºÌå£¬ÆäÏà»¥µÄ¹ØÏµ×é³ÉÁËÕû¸öÒµÎñ¶ÔÏó¡£²¢ÔÚ¶ÔÏóÖÐÌí¼ÓÁË³Ö¾Ã»¯Óë·´³ÖÐø»¯µÄ¹¦ÄÜ£¬Ê¹Æä¾ßÓÐÓëXMLÎÄ¼þÖ®¼äÏà»¥×ª»¯µÄÄÜÁ¦¡£ÆäÎªÁËÖ§³ÖJlist´°¿Ú×é¼þµÄModel£¬Ê¹ÓÃProxyÄ£Ê½Íê³ÉÁË¶ÔÓÚReview CommentµÄ·â×°¡£²¢ÓÉÓÚ½á¹û¼¯ÊôÓÚÐÐ¼¶£¬´ïµ½ÁË¸ù¾ÝIDE±à¼­Æ÷¹â±êµÄÒÆ¶¯À´¶¯Ì¬¸üÐÂµÄÐèÇó¡£
 
 3. ÄúËù¿ª·¢µÄNetbeans²å¼þÄ£¿éµÄÊ¹ÓÃ·½·¨¡£
 
