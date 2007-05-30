@@ -1,0 +1,29 @@
+* 提交作品时都必须提供以下文档资料：
+netbeans-contest@sun.com
+
+实用性 
+创新性 
+系统性能 
+投 入产出比等多方面因素 
+
+
+The following context was licensed under term of LGPL.
+
+1. 您所开发的Netbeans插件模块的作用。
+Code Review是软件开发过程中日常进行的一个重要环节。一般开发人员之间会做口头上的沟通。对于异地开发，大多数通过列表或者邮件的形势来完成。但其问题就是沟通效果和交互性上的问题。
+此插件着重解决Code Review过程中沟通的问题，通过构建在NetBeansIDE平台上的插件，完成对于Java文件Code Review结果的表现。在后台通过可以存取通用XML的方式达到结果的共享（其通过版本控制软件或文件共享）。
+
+2. 您所开发的Netbeans插件模块的架构。
+大体上分为三部分组成。
+A. 以CookieAction为扩展的Action组件。处理Java编辑器窗口内一系列事件的捕获和转发，并承担了初始化业务对象以及交互界面的责任。
+
+B. 在TopComponent上扩展的窗口组件为核心的交互界面，包含了对于当前行Code Review结果的增删功能。
+
+C. 一系列的Java Bean组成对象群体，其相互的关系组成了整个业务对象。并在对象中添加了持久化与反持续化的功能，使其具有与XML文件之间相互转化的能力。其为了支持Jlist窗口组件的Model，使用Proxy模式完成了对于Review Comment的封装。并由于结果集属于行级，达到了根据IDE编辑器光标的移动来动态更新的需求。
+
+3. 您所开发的Netbeans插件模块的使用方法。
+
+步骤1：启动Code Review模块
+步骤2：移动光标去指定的行
+步骤3：维护当前行的Code Review结果（增删）
+步骤4：关闭Code Review模块
