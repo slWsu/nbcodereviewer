@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-OpenIDE-Module: com.genewoo.codereview.editor
-OpenIDE-Module-Layer: com/genewoo/codereview/editor/layer.xml
-OpenIDE-Module-Localizing-Bundle: com/genewoo/codereview/editor/Bundle.properties
-OpenIDE-Module-Specification-Version: 1.0
-
