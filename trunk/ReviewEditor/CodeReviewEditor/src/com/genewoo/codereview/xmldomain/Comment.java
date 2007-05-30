@@ -75,7 +75,8 @@ public class Comment extends Converable {
         return comment;
     }
 
-    public String getNodeText() {
+    public synchronized String getNodeText() {
+        cleanNodeText();
         addValuedNode(OWNER, this.owner);
         addValuedNode(CONTENT, this.content);
         return sb.toString();

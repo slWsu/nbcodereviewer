@@ -77,10 +77,12 @@ public final class ReviewCommentEditorTopComponent extends TopComponent {
 
         jToolBar.add(jButtonDel);
 
+        jSplitPaneAll.setDividerLocation(100);
         jSplitPaneAll.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jListCommentList.setModel(comments);
         jListCommentList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListCommentList.setMinimumSize(new java.awt.Dimension(0, 200));
+        jListCommentList.setPreferredSize(new java.awt.Dimension(0, 100));
         jListCommentList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jListCommentListValueChanged(evt);
@@ -97,14 +99,18 @@ public final class ReviewCommentEditorTopComponent extends TopComponent {
         );
         jPanelListLayout.setVerticalGroup(
             jPanelListLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
         );
         jSplitPaneAll.setTopComponent(jPanelList);
 
         jTextAreaComment.setColumns(20);
         jTextAreaComment.setEditable(false);
+        jTextAreaComment.setLineWrap(true);
         jTextAreaComment.setRows(5);
+        jTextAreaComment.setWrapStyleWord(true);
+        jTextAreaComment.setDoubleBuffered(true);
         jTextAreaComment.setMaximumSize(new java.awt.Dimension(2147483647, 50));
+        jTextAreaComment.setPreferredSize(new java.awt.Dimension(220, 50));
         jScrollPane2.setViewportView(jTextAreaComment);
 
         org.jdesktop.layout.GroupLayout jPanelTextLayout = new org.jdesktop.layout.GroupLayout(jPanelText);
@@ -115,7 +121,7 @@ public final class ReviewCommentEditorTopComponent extends TopComponent {
         );
         jPanelTextLayout.setVerticalGroup(
             jPanelTextLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
         );
         jSplitPaneAll.setRightComponent(jPanelText);
 
@@ -252,7 +258,7 @@ public final class ReviewCommentEditorTopComponent extends TopComponent {
     
     public void componentClosed() {
         if(null != this.action)
-            this.action.closeAll();
+            this.action.closeAll(false);
     }
     
     /** replaces this in object stream */

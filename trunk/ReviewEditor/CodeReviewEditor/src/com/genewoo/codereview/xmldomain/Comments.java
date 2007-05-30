@@ -62,7 +62,7 @@ public class Comments extends Converable {
         return comments;
     }
     
-    public void addComment(Comment comment) {
+    public synchronized void addComment(Comment comment) {
         this.commentList.add(comment);
     }
     
@@ -84,7 +84,8 @@ public class Comments extends Converable {
         return node;
     }
     
-    public String getNodeText() {
+    public synchronized String getNodeText() {
+        cleanNodeText();
         addValuedNode(POSITION, Integer.toString(this.position));
         for (Comment comment : this.commentList) {
             startNode(COMMENT);
