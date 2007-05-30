@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.1//EN" "http://www.netbeans.org/dtds/filesystem-1_1.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="Edit">
+            <file name="com-genewoo-codereview-editor-action-ShowCommentsAction.instance"/>
+        </folder>
+        <folder name="Window">
+            <file name="com-genewoo-codereview-editor-window-ReviewCommentEditorAction.instance"/>
+        </folder>
+    </folder>
+    <folder name="Editors">
+        <folder name="text">
+            <folder name="x-java">
+                <folder name="Popup">
+                    <attr name="SeparatorBeforeCut.instance/com-genewoo-codereview-editor-action-separatorAfter.instance" boolvalue="true"/>
+                    <file name="com-genewoo-codereview-editor-action-ShowCommentsAction.shadow">
+                        <attr name="originalFile" stringvalue="Actions/Edit/com-genewoo-codereview-editor-action-ShowCommentsAction.instance"/>
+                    </file>
+                    <attr name="com-genewoo-codereview-editor-action-separatorAfter.instance/com-genewoo-codereview-editor-action-ShowCommentsAction.shadow" boolvalue="true"/>
+                    <file name="com-genewoo-codereview-editor-action-separatorAfter.instance">
+                        <attr name="instanceClass" stringvalue="javax.swing.JSeparator"/>
+                    </file>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="Window">
+            <file name="ReviewCommentEditorAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/com-genewoo-codereview-editor-window-ReviewCommentEditorAction.instance"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Components">
+            <file name="ReviewCommentEditorTopComponent.settings" url="ReviewCommentEditorTopComponentSettings.xml"/>
+        </folder>
+        <folder name="Modes">
+            <folder name="output">
+                <file name="ReviewCommentEditorTopComponent.wstcref" url="ReviewCommentEditorTopComponentWstcref.xml"/>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="AnnotationTypes">
+        <file name="comment.xml" url="comment.xml"/>
+    </folder>
+</filesystem>
