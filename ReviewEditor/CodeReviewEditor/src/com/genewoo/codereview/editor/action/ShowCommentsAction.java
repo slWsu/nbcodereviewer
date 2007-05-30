@@ -9,10 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.nio.channels.FileLock;
 import java.util.EventObject;
 import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
@@ -26,12 +24,9 @@ import org.netbeans.editor.Utilities;
 import org.netbeans.modules.editor.NbEditorUtilities;
 import org.netbeans.modules.editor.java.JavaKit;
 import org.openide.cookies.EditorCookie;
-import org.openide.cookies.OpenCookie;
-import org.openide.cookies.SaveCookie;
+import org.openide.filesystems.FileLock;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
-import org.openide.loaders.DataObject;
-import org.openide.loaders.DataObjectNotFoundException;
 import org.openide.nodes.Node;
 import org.openide.text.Annotation;
 import org.openide.text.NbDocument;
@@ -69,41 +64,45 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
     public void propertyChange(PropertyChangeEvent evt) {
         if(evt.getOldValue() instanceof JavaKit && null == evt.getNewValue()) {
             //Close Event
-            closeAll();
+            closeAll(true);
         }
     }
     /**
      * Close and clean up everything.
      *
      */
-    public void closeAll() {
+    public void closeAll(boolean isEditorClose) {
 //            c.getOpenedPanes()[0].removePropertyChangeListener(this);
 //            c.getOpenedPanes()[0].removeCaretListener(this);
         // Close Review Comments Editor
-        if(null !=  getMostActiveComponent()) {
-            removeStatusBarItem(getMostActiveComponent());
-            c.getOpenedPanes()[0].removeCaretListener(this);
-            c.getOpenedPanes()[0].removePropertyChangeListener("editorKit", this);
+//        if(null !=  getMostActiveComponent()) {
+        synchronized (status) {
+            if(status == 0)
+                return;
+            
+            if(! isEditorClose && null != c && null != c.getOpenedPanes()[0]) {
+                Utilities.setStatusBoldText(c.getOpenedPanes()[0], NbBundle.getMessage(ShowCommentsAction.class, "CTL_CloseCommentsAction"));
+                c.getOpenedPanes()[0].removeCaretListener(this);
+                c.getOpenedPanes()[0].removePropertyChangeListener("editorKit", this);
+            }
+            //TODO rc.toNodeText() can't be invoked twice.'
+            rc.writeFile();
+            
+            TopComponent win = WindowManager.getDefault().findTopComponent("ReviewCommentEditorTopComponent");
+            status = 0;
+            win.close();
+            rc = null;
+            
         }
-        rc.writeFile();
-        TopComponent win = WindowManager.getDefault().findTopComponent("ReviewCommentEditorTopComponent");
-        
-        win.close();
-        rc = null;
-        status = 0;
-    }
-    
-    public static void removeStatusBarItem(JTextComponent jText) {
-        Utilities.clearStatusText(jText);
-    }
+    }    
     
     EditorCookie c;
     
-    private int status = 0;
+    private Integer status = 0;
     
     protected void performAction(Node[] activatedNodes) {
         if(status == 1) {
-            closeAll();
+            closeAll(false);
             
             return;
         }
@@ -115,7 +114,7 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
         
         StyledDocument sd = (StyledDocument)c.getOpenedPanes()[0].getDocument();
         rc = ReviewComments.parseReviewComments(getFileName());
-        addStatusBarItem(c.getOpenedPanes()[0]);
+        Utilities.setStatusBoldText(c.getOpenedPanes()[0], NbBundle.getMessage(ShowCommentsAction.class, "CTL_OpenCommentsAction"));
         TopComponent win = WindowManager.getDefault().findTopComponent("ReviewCommentEditorTopComponent");
         
         win.open();
@@ -145,19 +144,25 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
     public void caretUpdate(CaretEvent e) {
         if(getLineNumber(getTextComponent(e)) == linenumber)
             return;
-
-        Utilities.setStatusBoldText(getTextComponent(e), "Commented");
+        
+        
         
 //        System.out.println(getLineNumber(getTextComponent(e)));
         ReviewCommentEditorTopComponent win = (ReviewCommentEditorTopComponent) WindowManager.getDefault().findTopComponent("ReviewCommentEditorTopComponent");
         win.open();
-        win.requestActive();        
+        win.requestActive();
         win.setReviewCommentAction(this);
         Comments comments = rc.getComments(getLineNumber(getTextComponent(e)));
         if(null == comments) {
             comments = new Comments();
             comments.setPosition(getLineNumber(getTextComponent(e)));
             rc.addComments(comments);
+            Utilities.setStatusText(getTextComponent(e), "Comments Created");
+        } else {
+            if(comments.getCommentList().size() > 0)
+                Utilities.setStatusBoldText(getTextComponent(e), "Comments Loaded");
+            else
+                Utilities.setStatusText(getTextComponent(e), "Comments Created");
         }
         win.setComments(comments);
         win.updateUI();
@@ -216,7 +221,7 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
     }
     
     public static void addStatusBarItem(JTextComponent jText) {
-        Utilities.setStatusBoldText(jText, "Commented");
+        
         //System.out.println("S:" + Utilities.getStatusText(jText));
     }
     
@@ -250,10 +255,9 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
     }
     
     public String getName() {
-        if(status==0)
-            return NbBundle.getMessage(ShowCommentsAction.class, "CTL_ShowCommentsAction");
-        else
-            return NbBundle.getMessage(ShowCommentsAction.class, "CTL_CloseCommentsAction");
+        
+        return NbBundle.getMessage(ShowCommentsAction.class, "CTL_ShowCommentsAction");
+        
     }
     
     protected Class[] cookieClasses() {

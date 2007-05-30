@@ -35,6 +35,11 @@ public abstract class Converable {
     
     public abstract String getNodeText();
     
+    protected void cleanNodeText() {
+        if(sb.length() != 0)
+        sb.delete(0, sb.length() - 1);
+    }
+    
     public abstract Node toNode(Document doc);
     
 }

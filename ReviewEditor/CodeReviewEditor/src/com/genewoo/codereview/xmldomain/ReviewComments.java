@@ -1,9 +1,10 @@
 package com.genewoo.codereview.xmldomain;
 import com.sun.org.apache.xpath.internal.XPathAPI;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -145,6 +146,7 @@ public class ReviewComments extends Converable {
     }
     
     public Node toNode(Document doc) {
+        cleanNodeText();
         Node root = doc.appendChild(doc.createElement(REVIEWCOMMENTS.replace("/", "")));
         Node ver = doc.createTextNode(VERSION);
         ver.setTextContent(this.getVersion());
@@ -155,7 +157,8 @@ public class ReviewComments extends Converable {
         return root;
     }
     
-    public String getNodeText() {
+    public synchronized  String getNodeText() {
+        validateComments();
         sb.append(HEADER);
         startNode(REVIEWCOMMENTS.replace("/", ""));
         addValuedNode(VERSION, this.version);
@@ -168,14 +171,14 @@ public class ReviewComments extends Converable {
         return sb.toString();
     }
     
-    public void writeFile() {
+    public synchronized void writeFile() {
         try {
             File file = new File(this.path);
             if(file.exists()) {
                 file.delete();
             }
             this.validateComments();
-            BufferedWriter out = new BufferedWriter(new FileWriter(this.path));
+            Writer out = new OutputStreamWriter(new FileOutputStream(this.path, false), "UTF8");
             out.write(this.getNodeText());
             out.close();
         } catch (IOException e) {
