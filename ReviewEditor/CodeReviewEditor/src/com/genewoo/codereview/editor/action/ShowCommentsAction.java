@@ -82,8 +82,14 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
         // Close Review Comments Editor
         if(null !=  getMostActiveComponent()) {
             removeStatusBarItem(getMostActiveComponent());
+            c.getOpenedPanes()[0].removeCaretListener(this);
+            c.getOpenedPanes()[0].removePropertyChangeListener("editorKit", this);
         }
         rc.writeFile();
+        TopComponent win = WindowManager.getDefault().findTopComponent("ReviewCommentEditorTopComponent");
+        
+        win.close();
+        rc = null;
         status = 0;
     }
     
@@ -98,7 +104,7 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
     protected void performAction(Node[] activatedNodes) {
         if(status == 1) {
             closeAll();
-
+            
             return;
         }
         status = 1;
@@ -134,12 +140,18 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
         
     }
     
+    private int linenumber = -1;
     
     public void caretUpdate(CaretEvent e) {
-        Utilities.setStatusBoldText(getTextComponent(e), "Commented - Changed");
+        if(getLineNumber(getTextComponent(e)) == linenumber)
+            return;
+
+        Utilities.setStatusBoldText(getTextComponent(e), "Commented");
         
 //        System.out.println(getLineNumber(getTextComponent(e)));
         ReviewCommentEditorTopComponent win = (ReviewCommentEditorTopComponent) WindowManager.getDefault().findTopComponent("ReviewCommentEditorTopComponent");
+        win.open();
+        win.requestActive();        
         win.setReviewCommentAction(this);
         Comments comments = rc.getComments(getLineNumber(getTextComponent(e)));
         if(null == comments) {
@@ -339,7 +351,7 @@ public final class ShowCommentsAction extends CookieAction implements CaretListe
         //http://jroller.com/page/ramlog/20060715
     }
     
-
+    
     
     
 }
