@@ -5,7 +5,7 @@
   <artifactId>prototype</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>Maven Quick Start Archetype</name>
+  <name>Taobao Prototype Project</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -26,4 +26,26 @@
     <module>model</module>
     <module>webapp</module>
   </modules>
+  <repositories>
+    <repository>
+      <id>jboss</id>
+      <url>http://repository.jboss.com/maven2/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>Maven Plugin Repository</id>
+      <url>http://struts2plugin-maven-repo.googlecode.com/svn/trunk/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+  </repositories>
 </project>
